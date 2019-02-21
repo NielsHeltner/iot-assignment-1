@@ -6,7 +6,7 @@ file_location = 'data.txt'
 def write_to_device1():
 	with serial.Serial("COM3", 115200, timeout=None) as ser:
 		start = time.time()
-		print('Writing to device 1 (time: ' + start + ')')
+		print('Writing to device 1 (time: ' + str(start) + ')')
 		ser.write('on\n'.encode())
 		
 		return start
@@ -20,7 +20,7 @@ def read_from_device2(start):
 		light = ser.readline().decode().rstrip('\r\n')
 		end = time.time()
 		print(light)
-		print('Device 2 response at time: ' + end)
+		print('Device 2 response at time: ' + str(end))
 
 		return end, light
 
