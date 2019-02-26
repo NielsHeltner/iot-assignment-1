@@ -1,12 +1,18 @@
 import pycom
-import led_controller
 import time
-from machine import UART
 
-uart = UART(0, 115200)
+
+def on():
+    pycom.rgbled(0x007f00) #green
+
+
+def off():
+    pycom.rgbled(0x000000)
+
+
 commands = {
-    'on': led_controller.on, 
-    'off': led_controller.off
+    'on': on, 
+    'off': off
 }
 
 
@@ -17,23 +23,14 @@ def dispatch(command):
         print('Command \'' + command + '\' not recognized')
 
 
-def read():
-    return uart.readline().decode().rstrip('\r\n')
-
-
 def main():
     pycom.heartbeat(False)
 
     for i in range(10):
-        if uart.any() > 0:
-            line = read()
-            print('pycom read ' + line)
-            dispatch(line)
-        else:
-            print('pycom nothing to read')
-        time.sleep(1)
+        line = input()
+        print('pycom read ' + line)
+        dispatch(line)
 
 
 if __name__ == '__main__':
     main()
-
