@@ -3,6 +3,7 @@ import time
 
 file_location = 'data.txt'
 
+
 def write_to_device1():
 	with serial.Serial("COM3", 115200, timeout=None) as ser:
 		start = time.time()

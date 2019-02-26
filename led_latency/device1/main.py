@@ -1,31 +1,24 @@
 import pycom
+import led_controller
 import time
 from machine import UART
 
 uart = UART(0, 115200)
-
-
-def green():
-    pycom.rgbled(0x007f00)
-
-
-def off():
-    pycom.rgbled(0x000000)
-
-
-def read():
-    return uart.readline().decode().rstrip('\r\n')
-
-
 commands = {
-    'on': green, 
-    'off': off
+    'on': led_controller.on, 
+    'off': led_controller.off
 }
+
+
 def dispatch(command):
     try:
         commands[command]()
     except KeyError:
         print('Command \'' + command + '\' not recognized')
+
+
+def read():
+    return uart.readline().decode().rstrip('\r\n')
 
 
 def main():
