@@ -10,8 +10,8 @@ def sense_light():
     return light_sensor.light()
 
 
-def average(_tuple):
-    return sum(value for value in _tuple) / len(_tuple)
+def average(data_structure):
+    return sum(value for value in data_structure) / len(data_structure)
 
 
 def process_light(prev_light_value, light_value):

@@ -19,6 +19,7 @@ commands = {
 def dispatch(command):
     try:
         commands[command]()
+        print('Command \'' + command + '\' dispatched')
     except KeyError:
         print('Command \'' + command + '\' not recognized')
 
@@ -28,7 +29,6 @@ def main():
 
     for i in range(10):
         line = input()
-        print('pycom read ' + line)
         dispatch(line)
 
 

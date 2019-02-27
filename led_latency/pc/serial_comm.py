@@ -4,12 +4,25 @@ import time
 file_location = 'data.txt'
 
 
+def write(ser, text):
+	ser.write((str(text) + '\r\n').encode())
+
+
+def read(ser):
+	return ser.readline().decode().rstrip('\r\n')
+
+
 def write_to_device1():
 	with serial.Serial("COM3", 115200, timeout=None) as ser:
 		start = time.time()
 		print('Writing to device 1 (time: ' + str(start) + ')')
-		ser.write('on\n'.encode())
+		write(ser, 'on')
+
+		read(ser) #skip echo of what was just written
 		
+		if ser.in_waiting > 0:
+			line = read(ser)
+			print(line)
 		return start
 
 		#print('Device 1 response: ' + ser.readline().decode())
@@ -18,7 +31,7 @@ def write_to_device1():
 def read_from_device2(start):
 	with serial.Serial("port of second device", 115200, timeout=None) as ser:
 		print('Waiting for device 2')
-		light = ser.readline().decode().rstrip('\r\n')
+		light = read(ser)
 		end = time.time()
 		print(light)
 		print('Device 2 response at time: ' + str(end))
