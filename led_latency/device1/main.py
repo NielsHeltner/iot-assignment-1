@@ -27,10 +27,12 @@ def dispatch(command):
 def main():
     pycom.heartbeat(False)
 
-    for i in range(10):
-        line = input()
-        dispatch(line)
-
+    try:
+        for i in range(100000):
+            line = input()
+            dispatch(line)
+    except KeyboardInterrupt:
+        pass
 
 if __name__ == '__main__':
     main()

@@ -2,7 +2,7 @@ import pycom
 import time
 import ltr329als01
 
-light_sensor = ltr329als01.LTR329ALS01()
+light_sensor = LTR329ALS01(integration = LTR329ALS01.ALS_INT_50, rate = LTR329ALS01.ALS_RATE_50)
 light_difference_threshold = 10.0
 
 
@@ -16,7 +16,7 @@ def average(data_structure):
 
 def process_light(prev_light_value, light_value):
     if is_light_different(prev_light_value, light_value):
-        print('light diff noticed')
+        print(light_value)
 
 
 def is_light_different(prev_light_value, light_value):
@@ -29,14 +29,15 @@ def main():
     pycom.heartbeat(False)
     
     prev_light_value = None
-    for i in range(10):
-        light_value = sense_light()
-        light_value = average(light_value)
-        process_light(prev_light_value, light_value)
+    try:
+        for i in range(100000):
+            light_value = sense_light()
+            light_value = average(light_value)
+            process_light(prev_light_value, light_value)
 
-        prev_light_value = light_value
-        time.sleep(1)
-
+            prev_light_value = light_value
+    except KeyboardInterrupt:
+        pass
 
 if __name__ == '__main__':
     main()

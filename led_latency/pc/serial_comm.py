@@ -29,7 +29,7 @@ def write_to_device1():
 
 
 def read_from_device2(start):
-	with serial.Serial("port of second device", 115200, timeout=None) as ser:
+	with serial.Serial("COM4", 115200, timeout=None) as ser:
 		print('Waiting for device 2')
 		light = read(ser)
 		end = time.time()
